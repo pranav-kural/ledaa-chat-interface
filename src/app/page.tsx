@@ -20,12 +20,10 @@ const gayathri = Gayathri({
 
 export default function Home() {
 	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			// if hljs is not already loaded, load it
-			if (!window.hljs) {
-				// add hljs property to window object
-				window.hljs = hljs;
-			}
+		// if hljs is not already loaded, load it
+		if (!window.hljs) {
+			// add hljs property to window object
+			window.hljs = hljs;
 		}
 	}, []);
 
