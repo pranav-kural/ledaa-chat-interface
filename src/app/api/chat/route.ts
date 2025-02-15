@@ -12,7 +12,7 @@ async function handler(req: NextRequest) {
 	// Sends response back to Deep Chat using the Response format:
 	// https://deepchat.dev/docs/connect/#Response
 	return NextResponse.json({
-		text: 'This is a response from a NextJS edge server. Thank you for your message!',
+		text: 'some code below\n```java\nwhile (i < 5) {\n console.log("hi");\n i+= 1;\n}\n```',
 	});
 }
 

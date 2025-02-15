@@ -1,10 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import DeepChatComponent from './components/DeepChatComponent';
+import hljs from 'highlight.js';
+import { useEffect } from 'react';
 import { Open_Sans, Gayathri } from 'next/font/google';
-import './globals.css';
+import DeepChatComponent from './components/DeepChatComponent';
 import ContextContainer from './components/ContextContainer';
+import './globals.css';
 
 const openSans = Open_Sans({
 	variable: '--font-open-sans',
@@ -17,6 +19,16 @@ const gayathri = Gayathri({
 });
 
 export default function Home() {
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			// if hljs is not already loaded, load it
+			if (!window.hljs) {
+				// add hljs property to window object
+				window.hljs = hljs;
+			}
+		}
+	}, []);
+
 	return (
 		<>
 			<main className="flex flex-col items-center justify-center min-h-screen">

@@ -17,7 +17,7 @@ export default function DeepChatComponent({
 	return (
 		<DeepChat
 			className={className}
-			connect={{ url: '/api/custom/chat' }}
+			connect={{ url: '/api/chat' }}
 			introMessage={{
 				text: 'How can I help you today?',
 			}}
@@ -87,6 +87,7 @@ export default function DeepChatComponent({
 					shared: {
 						bubble: { color: 'black', padding: '15px' },
 					},
+					user: { bubble: { color: 'white' } },
 				},
 				intro: {
 					bubble: {
