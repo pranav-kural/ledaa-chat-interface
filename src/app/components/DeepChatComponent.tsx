@@ -1,10 +1,24 @@
+'use client';
 import dynamic from 'next/dynamic';
-import { RequestDetails } from 'deep-chat/dist/types/interceptors';
+import type { RequestDetails } from 'deep-chat/dist/types/interceptors';
+import { Response } from 'deep-chat/dist/types/response';
+import type { ContextDocument, UsageMetadata } from '@/types/aiTypes';
+import { HistoryMessage } from 'deep-chat/dist/types/history';
+import { useEffect, useRef } from 'react';
+import { DeepChat as DeepChatT } from 'deep-chat';
 
 export default function DeepChatComponent({
 	className,
+	setContextDocs,
+	history,
+	setHistory,
+	setUsageData,
 }: {
 	className?: string;
+	setContextDocs: (docs: ContextDocument[]) => void;
+	history: HistoryMessage[];
+	setHistory: (history: HistoryMessage[]) => void;
+	setUsageData: (usageData: UsageMetadata) => void;
 }) {
 	// need to import the component dynamically as it uses the 'window' property
 	const DeepChat = dynamic(
@@ -14,6 +28,15 @@ export default function DeepChatComponent({
 		}
 	);
 
+	const chatElementRef = useRef<DeepChatT>(null);
+
+	useEffect(() => {
+		import('highlight.js').then((module) => {
+			window.hljs = module.default;
+			chatElementRef.current?.refreshMessages(); // sometimes hljs may load too late - hence use this method to highlight code
+		});
+	}, []);
+
 	return (
 		<DeepChat
 			className={className}
@@ -21,20 +44,62 @@ export default function DeepChatComponent({
 			introMessage={{
 				text: 'How can I help you today?',
 			}}
+			loadHistory={() => {
+				console.log('loading history');
+				return history;
+			}}
 			requestBodyLimits={{ maxMessages: -1 }}
 			requestInterceptor={(details: RequestDetails) => {
-				console.log(details);
 				return details;
 			}}
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			responseInterceptor={(response: any) => {
-				console.log(response);
+			responseInterceptor={(response: Response) => {
+				console.log('processing response');
+				if (response.text) {
+					console.log('Extracting context docs from response');
+					// response we get contains answer and context docs used
+					const answer = response.text;
+					// set history if available
+					if ('history' in response) {
+						console.log('Setting history');
+						const answerMessage: HistoryMessage = {
+							role: 'ai',
+							text: answer,
+						};
+						// get history
+						const msgHistory = response.history as HistoryMessage[];
+						// add answer message to history
+						msgHistory.push(answerMessage);
+						// set history
+						setHistory(msgHistory);
+					}
+					// if context docs in response
+					if ('contextDocs' in response) {
+						console.log('Context docs found in response');
+						// context docs are stored in the response as a string
+						const contextDocsStr = response.contextDocs as string;
+						// parse context docs string to get the actual context docs
+						const docs: ContextDocument[] =
+							JSON.parse(contextDocsStr);
+						// set the context docs in the parent component
+						setContextDocs(docs);
+					}
+					// if usage metadata in response
+					if ('usageData' in response) {
+						console.log('Usage metadata found in response');
+						// usage metadata is stored in the response
+						const usageData = response.usageData as UsageMetadata;
+						// set the usage metadata in the parent component
+						setUsageData(usageData);
+					}
+					// return response with answer only
+					response.text = answer;
+				}
 				return response;
 			}}
 			style={{
 				height: '100%',
 				width: '100%',
-				fontSize: '1.15em',
+				fontSize: '1.05em',
 				fontFamily: "'Open Sans', 'Open Sans Fallback'",
 				border: 'none',
 				borderRadius: '15px',
@@ -48,6 +113,8 @@ export default function DeepChatComponent({
 							padding: '2px',
 							// shadow
 							boxShadow: '0 0 5px 0 rgba(0, 0, 0, 0.1)',
+							transform: 'scale(1.15)',
+							marginLeft: '10px',
 						},
 						hover: { backgroundColor: '#c6e1ff' },
 						click: { backgroundColor: '#acd3ff' },
