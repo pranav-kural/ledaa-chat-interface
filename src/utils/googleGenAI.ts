@@ -2,7 +2,7 @@
  * Task type for embedding content.
  * @public
  */
-export declare enum TaskType {
+export enum TaskType {
 	TASK_TYPE_UNSPECIFIED = 'TASK_TYPE_UNSPECIFIED',
 	RETRIEVAL_QUERY = 'RETRIEVAL_QUERY',
 	RETRIEVAL_DOCUMENT = 'RETRIEVAL_DOCUMENT',

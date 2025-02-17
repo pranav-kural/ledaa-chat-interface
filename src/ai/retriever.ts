@@ -1,6 +1,7 @@
 import { PineconeStore } from '@langchain/pinecone';
 import { GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
-import { TaskType } from '@/utils/google-genai-tasktype';
+import { TaskType } from '@/utils/googleGenAI';
+import { Pinecone as PineconeClient } from '@pinecone-database/pinecone';
 
 // Singleton instance for retriever
 let vectorStore: PineconeStore | undefined;
@@ -12,6 +13,7 @@ let vectorStore: PineconeStore | undefined;
 export async function getVectorStore(): Promise<PineconeStore> {
 	// if vector store is not initialized, initialize it
 	if (!vectorStore) {
+		console.log('Initializing vector store');
 		try {
 			// Confirm environment variables are set
 			if (
@@ -30,16 +32,20 @@ export async function getVectorStore(): Promise<PineconeStore> {
 				taskType: TaskType.RETRIEVAL_QUERY,
 			});
 
+			const pinecone = new PineconeClient({
+				apiKey: process.env.PINECONE_API_KEY!,
+			});
+
+			const pineconeIndex = pinecone.Index(
+				process.env.PINECONE_INDEX!,
+				process.env.PINECONE_HOST_URL!
+			);
+
 			// Initialize vector store
 			vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
-				pineconeConfig: {
-					indexName: process.env.PINECONE_INDEX!,
-					indexHostUrl: process.env.PINECONE_HOST_URL!,
-					config: {
-						apiKey: process.env.PINECONE_API_KEY!,
-					},
-				},
+				pineconeIndex,
 			});
+			console.log('Vector store initialized');
 		} catch (error) {
 			throw new Error(`Unable to initialize vector store: ${error}`);
 		}
