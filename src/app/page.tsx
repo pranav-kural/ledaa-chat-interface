@@ -1,38 +1,37 @@
 'use client';
 
 import Link from 'next/link';
-import hljs from 'highlight.js';
-import { useEffect } from 'react';
-import { Open_Sans, Gayathri } from 'next/font/google';
-import DeepChatComponent from './components/DeepChatComponent';
-import ContextContainer from './components/ContextContainer';
-import './globals.css';
+import { useState } from 'react';
+import { Open_Sans, Nunito } from 'next/font/google';
+import DeepChatComponent from '@/app/components/DeepChatComponent';
+import ContextContainer from '@/app/components/ContextContainer';
+import '@/app/globals.css';
+import type { ContextDocument, UsageMetadata } from '@/types/aiTypes';
+import { HistoryMessage } from 'deep-chat/dist/types/history';
+import PrototypeMessage from './components/PrototypeMessage';
+import Header from './components/Header';
 
 const openSans = Open_Sans({
 	variable: '--font-open-sans',
 	subsets: ['latin'],
 });
 
-const gayathri = Gayathri({
-	weight: '400',
+const nunito = Nunito({
 	subsets: ['latin'],
 });
 
 export default function Home() {
-	useEffect(() => {
-		// if hljs is not already loaded, load it
-		if (!window.hljs) {
-			// add hljs property to window object
-			window.hljs = hljs;
-		}
-	}, []);
+	const [contextDocs, setContextDocs] = useState<ContextDocument[]>([]);
+	const [history, setHistory] = useState<HistoryMessage[]>([]);
+	const [usageData, setUsageData] = useState<UsageMetadata | undefined>();
 
 	return (
 		<>
 			<main className="flex flex-col items-center justify-center min-h-screen">
-				<div className="flex flex-col gap-1 mb-3">
+				<Header />
+				<div className="flex flex-col gap-1 mb-6 mt-10">
 					<h1
-						className={`${gayathri.className} text-4xl font-bold text-center`}
+						className={`${nunito.className} text-4xl font-bold text-center`}
 					>
 						Ledger API Assistant
 					</h1>
@@ -41,6 +40,7 @@ export default function Home() {
 						<Link
 							href="https://fragment.dev/docs"
 							className="text-blue-500"
+							target="_blank"
 						>
 							Fragement&apos;s Ledger API.
 						</Link>
@@ -53,13 +53,22 @@ export default function Home() {
 					></div>
 					<div className="flex flex-row items-start justify-start gap-3 h-full w-full">
 						<div className="flex w-[50%] h-full">
-							<DeepChatComponent />
+							<DeepChatComponent
+								setContextDocs={setContextDocs}
+								history={history}
+								setHistory={setHistory}
+								setUsageData={setUsageData}
+							/>
 						</div>
 						<div className="flex w-[50%] h-full">
-							<ContextContainer />
+							<ContextContainer
+								contextDocs={contextDocs}
+								usageMetadata={usageData}
+							/>
 						</div>
 					</div>
 				</div>
+				<PrototypeMessage />
 			</main>
 		</>
 	);

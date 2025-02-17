@@ -1,5 +1,7 @@
 import hljs from 'highlight.js';
 
-interface Window {
-	hljs: typeof hljs;
+declare global {
+	interface Window {
+		hljs: typeof hljs;
+	}
 }
