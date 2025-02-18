@@ -1,12 +1,12 @@
 import { processQuery } from '@/ai/rag-chain';
-import { DeepChatTextRequestBody } from '@/types/deepChatTypes';
+import { ChatResponse, DeepChatTextRequestBody } from '@/types/deepChatTypes';
 import errorHandler from '@/utils/errorHandler';
 import { AIMessageChunk } from '@langchain/core/messages';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'edge';
 
-async function handler(req: NextRequest) {
+async function handler(req: NextRequest): Promise<NextResponse<ChatResponse>> {
 	// Text messages are stored inside request body using the Deep Chat JSON format:
 	// https://deepchat.dev/docs/connect
 	const messageRequestBody = (await req.json()) as DeepChatTextRequestBody;
@@ -18,9 +18,7 @@ async function handler(req: NextRequest) {
 
 	// if invalid query, return error
 	if (!query) {
-		return NextResponse.json({
-			text: 'Unable to process query. Please try again.',
-		});
+		throw new Error('Invalid query');
 	}
 
 	// process query and get response and retrieved docs used for context
@@ -34,8 +32,8 @@ async function handler(req: NextRequest) {
 
 	// Sends response back to Deep Chat using the Response format:
 	// https://deepchat.dev/docs/connect/#Response
-	return NextResponse.json({
-		text: answer.content,
+	return NextResponse.json<ChatResponse>({
+		text: answer.content as string,
 		contextDocs: docs,
 		history: messageRequestBody.messages,
 		usageData: answer.usage_metadata,
