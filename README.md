@@ -1,6 +1,29 @@
+# LEDAA Chat Interface
+
+LEDAA project is about building a conversational AI assistant for [Fragment's Ledger API](https://fragment.dev/docs). Towards this purpose, the **LEDAA Chat Interface** is a web-based conversational interface that allows users to interact with the LEDAA conversational AI assistant.
+
+This project demonstrates a <strong>conversational AI</strong> assistant that can help answer queries related to [Fragement&apos;s Ledger API](https://fragment.dev/docs).
+
+Main priority for this prototype is to demonstrate an AI assistant for Ledger API documentation and to present a <strong> Retrieval Augmented Generation (RAG)</strong>-based pipeline and workflow with automation for handling source data updates to ensure AI assistant can answer user queries related to the documentation <strong>effectively</strong> and <strong>accurately</strong>.
+
+To learn more about:
+
+-   [Building Ledger API Assistant](#)
+-   [Handling Ground Truth Updates Efficiently & in Real-Time in a RAG Workflow](#)
+
+## LEDAA Data Process Flow
+
+Below is the process flow for how ground truth data updates are handled and how the knowledge base is effectively updated.
+
+1. [`ledaa_updates_scanner`](https://github.com/pranav-kural/ledaa-updates-scanner) Lambda function monitors for changes in content of documentation.
+2. On detecting changes, it triggers the [`ledaa_load_data`](https://github.com/pranav-kural/ledaa-load-data) Lambda function passing it the URL of webpage.
+3. `ledaa_load_data` Lambda function invokes the [`ledaa_text_splitter`](https://github.com/pranav-kural/ledaa-text-splitter) Lambda function to initiate the process of scraping data from a given URL and to get a list of strings (representing text chunks or documents) which will be used in data ingestion.
+4. `ledaa_text_splitter` Lambda function invokes the [`ledaa_web_scrapper`](https://github.com/pranav-kural/ledaa-web-scrapper) Lambda function to scrape the URL and store the processed markdown data in S3. `ledaa_web_scrapper` function also stores the hash of the processed data in DynamoDB which will later be compared by `ledaa_updates_scanner` function to detect changes.
+5. On receiving processed document chunks back, `ledaa_load_data` Lambda function stores the data in the vector store.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Local Development
 
 First, run the development server:
 
@@ -20,17 +43,6 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## LICENSE
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
