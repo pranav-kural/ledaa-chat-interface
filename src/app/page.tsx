@@ -2,21 +2,17 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Open_Sans, Nunito } from 'next/font/google';
+import { Geist_Mono } from 'next/font/google';
+import { HistoryMessage } from 'deep-chat/dist/types/history';
 import DeepChatComponent from '@/app/components/DeepChatComponent';
 import ContextContainer from '@/app/components/ContextContainer';
-import '@/app/globals.css';
+import PrototypeMessage from '@/app/components/PrototypeMessage';
+import Header from '@/app/components/Header';
 import type { ContextDocument, UsageMetadata } from '@/types/aiTypes';
-import { HistoryMessage } from 'deep-chat/dist/types/history';
-import PrototypeMessage from './components/PrototypeMessage';
-import Header from './components/Header';
+import '@/app/globals.css';
 
-const openSans = Open_Sans({
-	variable: '--font-open-sans',
-	subsets: ['latin'],
-});
-
-const nunito = Nunito({
+const geistMono = Geist_Mono({
+	variable: '--font-geist-mono',
 	subsets: ['latin'],
 });
 
@@ -31,11 +27,11 @@ export default function Home() {
 				<Header />
 				<div className="flex flex-col gap-1 mb-6 mt-10">
 					<h1
-						className={`${nunito.className} text-4xl font-bold text-center`}
+						className={`${geistMono.className} text-4xl font-bold text-center`}
 					>
 						Ledger API Assistant
 					</h1>
-					<h2 className={`${openSans.className} text-lg text-center`}>
+					<h2 className={`text-lg text-center`}>
 						Get help with your queries related to{' '}
 						<Link
 							href="https://fragment.dev/docs"
@@ -46,13 +42,13 @@ export default function Home() {
 						</Link>
 					</h2>
 				</div>
-				<div className="flex flex-row items-center justify-center w-full h-[70vh] max-w-[1590px] px-20 md:px-14 sm:px-5 xs:px-3">
+				<div className="flex flex-row items-center justify-center w-full xl:h-[70vh] min-h-[70vh] max-w-[1590px] xl:px-20 md:px-14 sm:px-5 px-3">
 					<div
 						className="bg-diagonal-line"
 						style={{ background: '#e8f5ff' }}
 					></div>
-					<div className="flex flex-row items-start justify-start gap-3 h-full w-full">
-						<div className="flex w-[50%] h-full">
+					<div className="flex flex-col xl:flex-row items-start justify-start gap-3 h-full w-full">
+						<div className="flex w-full xl:w-[50%] h-full">
 							<DeepChatComponent
 								setContextDocs={setContextDocs}
 								history={history}
@@ -60,7 +56,7 @@ export default function Home() {
 								setUsageData={setUsageData}
 							/>
 						</div>
-						<div className="flex w-[50%] h-full">
+						<div className="flex w-full xl:w-[50%] h-full">
 							<ContextContainer
 								contextDocs={contextDocs}
 								usageMetadata={usageData}

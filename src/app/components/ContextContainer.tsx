@@ -1,7 +1,7 @@
 import type { ContextDocument, UsageMetadata } from '@/types/aiTypes';
-import { Nunito } from 'next/font/google';
+import { Geist_Mono } from 'next/font/google';
 
-const nunito = Nunito({
+const geistMono = Geist_Mono({
 	subsets: ['latin'],
 });
 
@@ -13,21 +13,21 @@ export default function ContextContainer({
 	usageMetadata?: UsageMetadata;
 }) {
 	return (
-		<div className="bg-slate-100 h-full w-full flex flex-col items-center justify-start z-10 rounded-lg p-5 gap-2 dark:text-black">
-			<h1 className={`${nunito.className} text-xl font-bold`}>
+		<div className="bg-neutral-200 h-full w-full flex flex-col items-center justify-start z-10 rounded-lg p-5 gap-2 dark:text-black">
+			<h1 className={`${geistMono.className} text-xl font-bold`}>
 				Retrieved Context
 			</h1>
-			<span className="text-sm px-5">
+			<span className={`text-sm px-5`}>
 				Below you will see a list of document chunks retrieved from the
 				knowledge base. These chunks were used for query
 				contextualization to assist LLM in preparing the response.
 			</span>
-			<div className="w-full overflow-y-scroll flex flex-col gap-4 mt-3">
+			<div className="w-full xl:h-full max-h-[70vh] overflow-y-scroll flex flex-col gap-4 mt-3">
 				{contextDocs.length > 0 ? (
 					contextDocs.map((doc, index) => (
 						<div
 							key={index}
-							className="w-full bg-slate-200 p-5 rounded-lg flex flex-col gap-2 text-xs hover:bg-slate-300"
+							className="w-full bg-neutral-300 p-5 rounded-lg flex flex-col gap-2 text-xs hover:bg-neutral-400"
 						>
 							<div className="flex flex-row w-full justify-between">
 								<div className="flex w-full">
@@ -52,7 +52,7 @@ export default function ContextContainer({
 						</div>
 					))
 				) : (
-					<div className="w-full bg-slate-200 p-2 rounded-lg text-center mt-10">
+					<div className="w-full bg-neutral-300 p-2 rounded-lg text-center mt-10">
 						<h2 className="text-lg fw-bold">
 							No documents to display yet
 						</h2>

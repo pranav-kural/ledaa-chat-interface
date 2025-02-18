@@ -39,6 +39,16 @@ export default function DeepChatComponent({
 
 	return (
 		<DeepChat
+			auxiliaryStyle={`
+				#chat-view {
+					min-height: 50vh;
+					max-height: 70vh;
+					overflow-y: auto;
+				}
+				a {
+					color:#2563eb;
+				}
+			`}
 			className={className}
 			connect={{ url: '/api/chat' }}
 			introMessage={{
@@ -98,9 +108,10 @@ export default function DeepChatComponent({
 			}}
 			style={{
 				height: '100%',
+				minHeight: '50vh',
 				width: '100%',
 				fontSize: '1.05em',
-				fontFamily: "'Open Sans', 'Open Sans Fallback'",
+				fontFamily: "'Geist Mono', 'Geist Mono Fallback'",
 				border: 'none',
 				borderRadius: '15px',
 				boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.1)',
@@ -152,9 +163,15 @@ export default function DeepChatComponent({
 			messageStyles={{
 				default: {
 					shared: {
-						bubble: { color: 'black', padding: '15px' },
+						bubble: {
+							color: 'black',
+							padding: '15px',
+							backgroundColor: '#e6e6e6',
+						},
 					},
-					user: { bubble: { color: 'white' } },
+					user: {
+						bubble: { color: 'white', backgroundColor: '#0084FF' },
+					},
 				},
 				intro: {
 					bubble: {
