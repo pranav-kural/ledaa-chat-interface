@@ -11,7 +11,7 @@ export default function PrototypeMessage() {
 					className="text-blue-500"
 					target="_blank"
 				>
-					Fragement&apos;s Ledger API
+					FRAGMENT toolkit (API)
 				</Link>
 				. Since, this prototype is for demonstration purposes only, the
 				assistant may not be able to answer all queries.
@@ -27,8 +27,9 @@ export default function PrototypeMessage() {
 				</Link>{' '}
 				(i.e., you may notice the chat interface re-rendering before
 				generating responses). Main priority for this prototype is to
-				demonstrate an AI assistant for Ledger API documentation and to
-				present a <strong>Retrieval Augmented Generation (RAG)</strong>
+				demonstrate an AI assistant for FRAGMENT&apos;s documentation
+				and to present a{' '}
+				<strong>Retrieval Augmented Generation (RAG)</strong>
 				-based pipeline and workflow with automation for handling source
 				data updates to ensure AI assistant can answer user queries
 				related to the documentation <strong>effectively</strong> and
@@ -37,8 +38,8 @@ export default function PrototypeMessage() {
 			<span>
 				To learn more about this project, check{' '}
 				<Link href="#" className="text-blue-500" target="_blank">
-					RAG Workflow with Efficient Ground Truth Updates: Building
-					Ledger API Assistant
+					Building AI Assistant for FRAGMENT toolkit (API)
+					documentation
 				</Link>{' '}
 				article.
 			</span>

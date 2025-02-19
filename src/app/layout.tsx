@@ -10,7 +10,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
 	title: 'LEDAA - AI Assistant',
-	description: 'AI assistant for Fragment Ledger API',
+	description: 'AI assistant for FRAGMENT toolkit (API)',
 };
 
 export default function RootLayout({

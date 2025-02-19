@@ -1,14 +1,14 @@
 # LEDAA Chat Interface
 
-LEDAA project is about building a conversational AI assistant for [Fragment's Ledger API](https://fragment.dev/docs). Towards this purpose, the **LEDAA Chat Interface** is a web-based conversational interface that allows users to interact with the LEDAA conversational AI assistant.
+LEDAA project is about building a conversational AI assistant for [FRAGMENT's toolkit (API)](https://fragment.dev/docs). Towards this purpose, the **LEDAA Chat Interface** is a web-based conversational interface that allows users to interact with the LEDAA conversational AI assistant.
 
-This project demonstrates a <strong>conversational AI</strong> assistant that can help answer queries related to [Fragement&apos;s Ledger API](https://fragment.dev/docs).
+This project demonstrates a <strong>conversational AI</strong> assistant that can help answer queries related to [Fragement&apos;s toolkit (API)](https://fragment.dev/docs).
 
-Main priority for this prototype is to demonstrate an AI assistant for Ledger API documentation and to present a <strong> Retrieval Augmented Generation (RAG)</strong>-based pipeline and workflow with automation for handling source data updates to ensure AI assistant can answer user queries related to the documentation <strong>effectively</strong> and <strong>accurately</strong>.
+Main priority for this prototype is to demonstrate an AI assistant for FRAGMENT&apos; documentation and to present a <strong> Retrieval Augmented Generation (RAG)</strong>-based pipeline and workflow with automation for handling source data updates to ensure AI assistant can answer user queries related to the documentation <strong>effectively</strong> and <strong>accurately</strong>.
 
 To learn more about:
 
--   [Building Ledger API Assistant](#)
+-   [Building AI Assistant for FRAGMENT toolkit (API) documentation](#)
 -   [Handling Ground Truth Updates Efficiently & in Real-Time in a RAG Workflow](#)
 
 ## LEDAA Data Process Flow
