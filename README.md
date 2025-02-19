@@ -6,10 +6,7 @@ This project demonstrates a <strong>conversational AI</strong> assistant that ca
 
 Main priority for this prototype is to demonstrate an AI assistant for FRAGMENT&apos; documentation and to present a <strong> Retrieval Augmented Generation (RAG)</strong>-based pipeline and workflow with automation for handling source data updates to ensure AI assistant can answer user queries related to the documentation <strong>effectively</strong> and <strong>accurately</strong>.
 
-To learn more about:
-
--   [Building AI Assistant for FRAGMENT toolkit (API) documentation](#)
--   [Handling Ground Truth Updates Efficiently & in Real-Time in a RAG Workflow](#)
+To learn more check: [Building AI Assistant for FRAGMENT documentation](https://www.pkural.ca/blog/posts/fragment/)
 
 ## LEDAA Data Process Flow
 
